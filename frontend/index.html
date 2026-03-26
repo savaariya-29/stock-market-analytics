@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro | Advanced Market Analysis</title>
+    <!-- Use Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <span class="logo-icon">📈</span>
+                <h1>StockPro Analytics</h1>
+            </div>
+            <div class="search-bar" style="position: relative;">
+                <input type="text" id="symbol-input"
+                    placeholder="Search any Company or Symbol (e.g., Apple, TSLA, TCS)..." value="AAPL"
+                    autocomplete="off">
+                <div id="autocomplete-results" class="autocomplete-dropdown hidden"></div>
+                <select id="period-input">
+                    <option value="1mo">1 Month</option>
+                    <option value="3mo">3 Months</option>
+                    <option value="6mo">6 Months</option>
+                    <option value="1y" selected>1 Year</option>
+                    <option value="2y">2 Years</option>
+                    <option value="5y">5 Years</option>
+                </select>
+                <button id="search-btn">Analyze</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Loading Indicator -->
+            <div id="loader" class="loader hidden">
+                <div class="spinner"></div>
+                <p>Fetching real-time market data...</p>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="error-banner" class="error-banner hidden">
+                <p id="error-message">Error fetching data</p>
+            </div>
+
+            <!-- Content Container -->
+            <div id="content" class="content">
+                <div class="glass stock-header">
+                    <h2 id="stock-name">Apple Inc. (AAPL)</h2>
+                    <p>Live Market Overview</p>
+                </div>
+
+                <section class="overview-cards">
+                    <div class="card glass">
+                        <h3>Current Price</h3>
+                        <div id="current-price" class="value">--</div>
+                    </div>
+                    <div class="card glass">
+                        <h3>Daily Change</h3>
+                        <div id="daily-change" class="value">--</div>
+                    </div>
+                    <div class="card glass">
+                        <h3>RSI (14)</h3>
+                        <div id="current-rsi" class="value">--</div>
+                    </div>
+                    <div class="card glass">
+                        <h3>Trading Signal</h3>
+                        <div id="signal" class="value">--</div>
+                    </div>
+                </section>
+
+                <section class="controls glass">
+                    <span class="controls-label">Indicators Overlay:</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggle-ma50">
+                        <span class="toggle-text">MA (50)</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggle-ma200">
+                        <span class="toggle-text">MA (200)</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggle-ema20">
+                        <span class="toggle-text">EMA (20)</span>
+                    </label>
+                </section>
+
+                <section class="charts-container">
+                    <div class="chart-wrapper main-chart glass">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                    <div class="two-columns">
+                        <div class="chart-wrapper volume-chart glass">
+                            <canvas id="volumeChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper rsi-chart glass">
+                            <canvas id="rsiChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
