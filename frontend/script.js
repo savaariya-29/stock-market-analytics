@@ -29,6 +29,7 @@ const loader = document.getElementById('loader');
 const content = document.getElementById('content');
 const errorBanner = document.getElementById('error-banner');
 const errorMessage = document.getElementById('error-message');
+const introView = document.getElementById('intro-view');
 
 // Chart.js Default configuration
 Chart.defaults.color = '#94a3b8';
@@ -55,12 +56,12 @@ function formatCurrency(value, currencyCode = 'USD') {
 
 async function fetchStockData(symbol, period) {
     try {
-        // UI Loading State
-        errorBanner.classList.add('hidden');
+        errorBanner.classList.add('d-none');
         searchBtn.textContent = 'Analyzing...';
         searchBtn.disabled = true;
-        loader.classList.remove('hidden');
-        content.style.opacity = '0.5';
+        loader.classList.remove('d-none');
+        content.style.opacity = '0.4';
+        content.style.filter = 'blur(4px)';
         content.style.pointerEvents = 'none';
 
         const response = await fetch(`${API_URL}?symbol=${encodeURIComponent(symbol)}&period=${period}`);
@@ -75,16 +76,20 @@ async function fetchStockData(symbol, period) {
         const shortName = currentData.info.shortName || symbol;
         stockNameEl.textContent = `${shortName} (${symbol})`;
 
+        introView.classList.add('d-none');
+        content.classList.remove('d-none');
+
         updateUI();
     } catch (error) {
         errorMessage.textContent = error.message;
-        errorBanner.classList.remove('hidden');
+        errorBanner.classList.remove('d-none');
     } finally {
         // Reset UI State
         searchBtn.textContent = 'Analyze';
         searchBtn.disabled = false;
-        loader.classList.add('hidden');
+        loader.classList.add('d-none');
         content.style.opacity = '1';
+        content.style.filter = 'blur(0)';
         content.style.pointerEvents = 'auto';
     }
 }
@@ -481,5 +486,19 @@ periodInput.addEventListener('change', () => {
     });
 });
 
-// Initial load
-fetchStockData('AAPL', '1y');
+document.getElementById('logo-home').addEventListener('click', () => {
+    content.classList.add('d-none');
+    introView.classList.remove('d-none');
+    errorBanner.classList.add('d-none');
+    symbolInput.value = '';
+
+    // Optional: reset global data so charts are cleared
+    currentData = null;
+    if (priceChart) priceChart.destroy();
+    if (volumeChart) volumeChart.destroy();
+    if (rsiChart) rsiChart.destroy();
+});
+
+// Ensure UI is in initial state
+content.classList.add('d-none');
+introView.classList.remove('d-none');

@@ -15,14 +15,13 @@
 <body>
     <div class="app-container">
         <header>
-            <div class="logo">
+            <div class="logo" id="logo-home" style="cursor: pointer;" title="Go to home">
                 <span class="logo-icon">📈</span>
-                <h1>StockPro Analytics</h1>
+                <h1>Stock analyzer</h1>
             </div>
             <div class="search-bar" style="position: relative;">
                 <input type="text" id="symbol-input"
-                    placeholder="Search any Company or Symbol (e.g., Apple, TSLA, TCS)..." value="AAPL"
-                    autocomplete="off">
+                    placeholder="Search any Company or Symbol (e.g., Apple, TSLA, TCS)..." value="" autocomplete="off">
                 <div id="autocomplete-results" class="autocomplete-dropdown hidden"></div>
                 <select id="period-input">
                     <option value="1mo">1 Month</option>
@@ -38,18 +37,40 @@
 
         <main>
             <!-- Loading Indicator -->
-            <div id="loader" class="loader hidden">
+            <div id="loader" class="loader d-none">
                 <div class="spinner"></div>
                 <p>Fetching real-time market data...</p>
             </div>
 
             <!-- Error Banner -->
-            <div id="error-banner" class="error-banner hidden">
+            <div id="error-banner" class="error-banner d-none">
                 <p id="error-message">Error fetching data</p>
             </div>
 
+            <!-- Intro View -->
+            <div id="intro-view" class="intro-view glass">
+                <h2>Welcome to Stock Analyzer</h2>
+                <div class="intro-content">
+                    <div class="intro-card glass">
+                        <h3>What is a Stock?</h3>
+                        <p>A stock (also known as equity) represents a share in the ownership of a company. Buying a
+                            stock means you own a small fraction of that corporation. Stocks are bought and sold on
+                            stock exchanges, and their prices fluctuate based on supply and demand, company operational
+                            performance, economic trends, and market sentiment.</p>
+                    </div>
+                    <div class="intro-card glass">
+                        <h3>How Does it Work?</h3>
+                        <p>Companies issue stocks to raise capital for their business operations. Investors buy these
+                            stocks with the expectation that the company will perform well, which can lead to the
+                            stock's price appreciating over time or the company paying out dividends. Search for any
+                            company using the bar above to view its real-time market data, technical indicators, and
+                            historical price charts.</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Content Container -->
-            <div id="content" class="content">
+            <div id="content" class="content d-none">
                 <div class="glass stock-header">
                     <h2 id="stock-name">Apple Inc. (AAPL)</h2>
                     <p>Live Market Overview</p>
